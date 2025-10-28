@@ -1,32 +1,4 @@
-<div align="center">
-<h1> WebVoyager 
-<img src="./assets/icon.png" width="45px">
-<br> Building an End-to-End Web Agent with Large Multimodal Models </h1>
-</div>
-
-<div align="center">
-
-![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)
-![Python 3.10+](https://img.shields.io/badge/python-3.10.13-green.svg)
-![Selenium](https://img.shields.io/badge/Selenium-4.15.2-red)
-
-</div>
-
-<div align="center">
-<img src="./assets/overall_process_crop.png" width="90%">
-</div>
-
-
-
-## Introduction
-
-This repo contains the data and implementation of our paper [WebVoyager](https://arxiv.org/abs/2401.13919). WebVoyager is an innovative Large Multimodal Model (LMM) powered web agent that can complete user instructions end-to-end by interacting with real-world websites. 
-
-- **Multimodal Web Agent**. We implement WebVoyager that integrates textual and visual information to address web tasks end-to-end and introduce a generalist planning approach for navigation.
-- **Online Environment**. We build an online web browsing environment using Selenium. 
-- **Diverse Web Tasks** We offer a variety of tasks centered on widely used websites and introduce a
-method for expanding these tasks.
-- **Evaluation Tool** We propose an automated evaluation protocol using GPT-4V.
+# WebVoyager Readme
 
 ## Setup Environment
 
@@ -84,7 +56,7 @@ Think carefully about the functions of given websites, and please note that the 
 After setting up the environment, you can start running WebVoyager. 
 
  1. Copy the examples you want to test into `data/tasks_test.jsonl`. For Booking and Google Flights tasks, please manually update the date in the task if it is outdated.
- 2. Modify the api_key in `run.sh` 
+ 2. Modify the api_key in `run.sh`
 
 You can run WebVoyager with the following command:
 ```bash 
