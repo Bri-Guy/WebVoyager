@@ -8,6 +8,7 @@ of using command-line arguments.
 
 from run_single_test import run_agent
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
