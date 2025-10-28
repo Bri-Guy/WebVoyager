@@ -4,3 +4,4 @@ results/2024*
 test_code.py
 __pycache__
 run.sh
+.venv/
