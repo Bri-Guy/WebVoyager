@@ -231,27 +231,66 @@ def exec_action_scroll(info, web_eles, driver_task, args, obs_info):
     time.sleep(3)
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--test_file', type=str, default='data/test.json')
-    parser.add_argument('--max_iter', type=int, default=5)
-    parser.add_argument("--api_key", default="key", type=str, help="YOUR_OPENAI_API_KEY")
-    parser.add_argument("--api_model", default="gpt-4o", type=str, help="api model name")
-    parser.add_argument("--output_dir", type=str, default='results')
-    parser.add_argument("--seed", type=int, default=None)
-    parser.add_argument("--max_attached_imgs", type=int, default=1)
-    parser.add_argument("--temperature", type=float, default=1.0)
-    parser.add_argument("--download_dir", type=str, default="downloads")
-    parser.add_argument("--text_only", action='store_true')
-    # for web browser
-    parser.add_argument("--headless", action='store_true', help='The window of selenium')
-    parser.add_argument("--save_accessibility_tree", action='store_true')
-    parser.add_argument("--force_device_scale", action='store_true')
-    parser.add_argument("--window_width", type=int, default=1024)
-    parser.add_argument("--window_height", type=int, default=768)  # for headless mode, there is no address bar
-    parser.add_argument("--fix_box_color", action='store_true')
-
-    args = parser.parse_args()
+def run_agent(
+    test_file='data/test.json',
+    max_iter=5,
+    api_key='key',
+    api_model='gpt-4o',
+    output_dir='results',
+    seed=None,
+    max_attached_imgs=1,
+    temperature=1.0,
+    download_dir='downloads',
+    text_only=False,
+    headless=False,
+    save_accessibility_tree=False,
+    force_device_scale=False,
+    window_width=1024,
+    window_height=768,
+    fix_box_color=False
+):
+    """
+    Core function to run the web agent. Can be called programmatically.
+    
+    Args:
+        test_file: Path to the test file with tasks
+        max_iter: Maximum number of iterations per task
+        api_key: OpenAI API key
+        api_model: Model name to use (e.g., 'gpt-4o')
+        output_dir: Directory to save results
+        seed: Random seed for reproducibility
+        max_attached_imgs: Maximum number of images to attach in context
+        temperature: Temperature for model sampling
+        download_dir: Directory for downloads
+        text_only: Use text-only mode (accessibility tree instead of screenshots)
+        headless: Run browser in headless mode
+        save_accessibility_tree: Save accessibility tree for debugging
+        force_device_scale: Force device scale factor to 1
+        window_width: Browser window width
+        window_height: Browser window height
+        fix_box_color: Fix the color of bounding boxes
+    """
+    # Create a simple namespace object to mimic argparse.Namespace
+    class Args:
+        pass
+    
+    args = Args()
+    args.test_file = test_file
+    args.max_iter = max_iter
+    args.api_key = api_key
+    args.api_model = api_model
+    args.output_dir = output_dir
+    args.seed = seed
+    args.max_attached_imgs = max_attached_imgs
+    args.temperature = temperature
+    args.download_dir = download_dir
+    args.text_only = text_only
+    args.headless = headless
+    args.save_accessibility_tree = save_accessibility_tree
+    args.force_device_scale = force_device_scale
+    args.window_width = window_width
+    args.window_height = window_height
+    args.fix_box_color = fix_box_color
 
     # OpenAI client
     client = OpenAI(api_key=args.api_key)
@@ -497,6 +536,50 @@ def main():
         print_message(messages, task_dir)
         driver_task.quit()
         logging.info(f'Total cost: {accumulate_prompt_token / 1000 * 0.01 + accumulate_completion_token / 1000 * 0.03}')
+
+
+def main():
+    """Command-line interface for the web agent."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--test_file', type=str, default='data/test.json')
+    parser.add_argument('--max_iter', type=int, default=5)
+    parser.add_argument("--api_key", default="key", type=str, help="YOUR_OPENAI_API_KEY")
+    parser.add_argument("--api_model", default="gpt-4o", type=str, help="api model name")
+    parser.add_argument("--output_dir", type=str, default='results')
+    parser.add_argument("--seed", type=int, default=None)
+    parser.add_argument("--max_attached_imgs", type=int, default=1)
+    parser.add_argument("--temperature", type=float, default=1.0)
+    parser.add_argument("--download_dir", type=str, default="downloads")
+    parser.add_argument("--text_only", action='store_true')
+    # for web browser
+    parser.add_argument("--headless", action='store_true', help='The window of selenium')
+    parser.add_argument("--save_accessibility_tree", action='store_true')
+    parser.add_argument("--force_device_scale", action='store_true')
+    parser.add_argument("--window_width", type=int, default=1024)
+    parser.add_argument("--window_height", type=int, default=768)
+    parser.add_argument("--fix_box_color", action='store_true')
+
+    args = parser.parse_args()
+    
+    # Call the core function with parsed arguments
+    run_agent(
+        test_file=args.test_file,
+        max_iter=args.max_iter,
+        api_key=args.api_key,
+        api_model=args.api_model,
+        output_dir=args.output_dir,
+        seed=args.seed,
+        max_attached_imgs=args.max_attached_imgs,
+        temperature=args.temperature,
+        download_dir=args.download_dir,
+        text_only=args.text_only,
+        headless=args.headless,
+        save_accessibility_tree=args.save_accessibility_tree,
+        force_device_scale=args.force_device_scale,
+        window_width=args.window_width,
+        window_height=args.window_height,
+        fix_box_color=args.fix_box_color
+    )
 
 
 if __name__ == '__main__':
