@@ -10,4 +10,15 @@ Done!
 
 ## Other setup
 
-Make sure to replace the `api_key` in `run.sh` with your own `OPENAI_API_KEY`.
+Make a `run.sh` file, and make sure to fill in the `api_key` with your own `OPENAI_API_KEY`.
+
+nohup python -u run.py \
+    --test_file ./data/tasks_test.jsonl \
+    --api_key IT_GOES_HERE \
+    --max_iter 15 \
+    --max_attached_imgs 3 \
+    --temperature 1 \
+    --fix_box_color \
+    --seed 42 > test_tasks.log &
+
+https://leaderboard.steel.dev/
