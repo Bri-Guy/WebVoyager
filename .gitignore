@@ -1,6 +1,6 @@
 *.log
 downloads/*.pdf
-results/2024*
+results/202*
 test_code.py
 __pycache__
 run.sh
