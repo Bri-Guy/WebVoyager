@@ -7,3 +7,7 @@
 2. `source .venv/bin/activate`
 
 Done!
+
+## Other setup
+
+Make sure to replace the `api_key` in `run.sh` with your own `OPENAI_API_KEY`.
